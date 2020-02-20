@@ -96,7 +96,7 @@ public class ABCCalculator {
   public int assignmentsCount(String text) {
     int count = 0;
     // Regex against every combination of =, ++ and --
-    Matcher matcher = Pattern.compile("(=|\\+\\+|\\-\\-)").matcher(text);
+    Matcher matcher = Pattern.compile("((\\s=\\s)|(\\+=)|(\\-=)|(\\*=)|(\\/=)|\\+\\+|\\-\\-)").matcher(text);
     while (matcher.find())
       count++;
     return count;
