@@ -40,7 +40,7 @@ public class ABCCalculator {
   /*
    * Runs the calculator
    */
-  public void run() throws NullPointerException{
+  public void run() throws NullPointerException {
     // Declare variables, will be needed
     int a, b, c;
     double abc;
@@ -64,7 +64,7 @@ public class ABCCalculator {
         b = branchesCount(entry.getValue());
         c = conditionsCount(entry.getValue());
         abc = Math.sqrt(a * a + b * b + c * c);
-        System.out.println("ABC score for "+ entry.getKey()+":\t\t"+abc);
+        System.out.println("ABC score for " + entry.getKey() + ":\t[A=" + a + ",B=" + b + ",C=" + c + "]\t" + abc);
       }
     }
   }
