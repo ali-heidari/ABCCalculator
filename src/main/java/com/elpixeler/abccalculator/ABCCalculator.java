@@ -2,11 +2,8 @@ package com.elpixeler.abccalculator;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.StringReader;
-import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -43,7 +40,7 @@ public class ABCCalculator {
   /*
    * Runs the calculator
    */
-  public void run() throws IOException {
+  public void run() throws NullPointerException{
     // Declare variables, will be needed
     int a, b, c;
     double abc;
@@ -53,7 +50,12 @@ public class ABCCalculator {
       if (fileEntry.isDirectory())
         continue;
       // Read source text
-      String source = readContent(fileEntry);
+      String source;
+      try {
+        source = readContent(fileEntry);
+      } catch (IOException e) {
+        continue;
+      }
       // Distinguish functions block
       Map<String, String> funcBlocks = extractFuncBlocks(source);
       // Now let's calculate the ABC for each method
