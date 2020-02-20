@@ -93,7 +93,7 @@ public class ABCCalculator {
    * @param text Text to calculates assignments count
    * @return The number of assignments
    */
-  private int assignmentsCount(String text) {
+  public int assignmentsCount(String text) {
     int count = 0;
     // Regex against every combination of =, ++ and --
     Matcher matcher = Pattern.compile("(=|\\+\\+|\\-\\-)").matcher(text);
@@ -108,7 +108,7 @@ public class ABCCalculator {
    * @param text Text to calculates branches count
    * @return The number of branches
    */
-  private int branchesCount(String text) {
+  public int branchesCount(String text) {
     int count = 0;
     // Regex against every combination of =, ++ and --
     Matcher matcher = Pattern.compile("(\\w+\\()").matcher(text);
@@ -123,7 +123,7 @@ public class ABCCalculator {
    * @param text Text to calculates conditions count
    * @return The number of conditions
    */
-  private int conditionsCount(String text) {
+  public int conditionsCount(String text) {
     int count = 0;
     // Regex against every combination of =, ++ and --
     Matcher matcher = Pattern.compile("(==|<|>|!|\\?)\\B|(if.\\(|else\\sif|else|case|default|try|catch)\\b").matcher(text);

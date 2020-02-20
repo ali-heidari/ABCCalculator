@@ -44,16 +44,8 @@ public class CircleBarVisualizerSmooth extends BaseVisualizer {
     // Stores radius and step-counter which every invoking of "onDraw" requires them
     private Map<String, Integer> configs = null;
 
-    public CircleBarVisualizerSmooth(Context context) {
-        super(context);
-    }
-
     public CircleBarVisualizerSmooth(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-    }
-
-    public CircleBarVisualizerSmooth(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
     }
 
     @Override
@@ -180,8 +172,6 @@ public class CircleBarVisualizerSmooth extends BaseVisualizer {
         // from the buffer will have chosen to be shown.
         // Get length of bar
         int t = getBarLength(i, (bytes.length - bytes.length % 4) / _BarCount);
-        // Convert to radians
-        angle = Math.toRadians(angle);
         // Find the round by
         int round = (int) (getConfig("stepCounter") % _StepsCount);
         if (round == 0) {
@@ -213,12 +203,10 @@ public class CircleBarVisualizerSmooth extends BaseVisualizer {
         int indexM4 = i * 4;
         // First time calculates the startX and startY for every byte
         if (getConfig("needsInit") == 1) {
-            float halfWidth = this.getWidth() / 2;
-            float halfHeight = this.getHeight() / 2;
             // Find startX
-            points[indexM4] = (float) (halfWidth + getConfig("radius") * Math.cos(Math.toRadians(angle)));
+            points[indexM4] = (float) (this.getWidth() / 2 + getConfig("radius") * Math.cos(angle));
             // Find startY
-            points[indexM4 + 1] = (float) (halfHeight + getConfig("radius") * Math.sin(Math.toRadians(angle)));
+            points[indexM4 + 1] = (float) (this.getHeight() / 2 + getConfig("radius") * Math.sin(angle));
         }
     }
 
@@ -234,7 +222,7 @@ public class CircleBarVisualizerSmooth extends BaseVisualizer {
     @Override
     protected void onDraw(Canvas canvas) {
         // Check if bytes initiated before
-        if (bytes == null || bytes.length == 0)
+        if (bytes == null)
             return;
 
         // Init configs
@@ -248,10 +236,13 @@ public class CircleBarVisualizerSmooth extends BaseVisualizer {
         // Calculates every points and iterate along increasing angle
         for (int i = 0; i < _BarCount; i++, angle += _AngleStep) {
 
-            this.fillStartingPoints(i, angle);
+            // Convert to radians
+            double radianAngle = Math.toRadians(angle);
+
+            this.fillStartingPoints(i, radianAngle);
 
             // Calculates points for current round
-            calcRound(i, angle);
+            calcRound(i, radianAngle);
 
         }
         if (getConfig("needsInit") == 0)
