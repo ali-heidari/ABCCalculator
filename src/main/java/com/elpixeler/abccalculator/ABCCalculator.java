@@ -126,7 +126,7 @@ public class ABCCalculator {
   public int conditionsCount(String text) {
     int count = 0;
     // Regex against every combination of =, ++ and --
-    Matcher matcher = Pattern.compile("(==|<|>|!|\\?)\\B|(if.\\(|else\\sif|else|case|default|try|catch)\\b").matcher(text);
+    Matcher matcher = Pattern.compile("(==|<|>|!|\\?)\\B|(else\\sif|else|case|default|try|catch)\\b").matcher(text);
     while (matcher.find())
       count++;
     return count;

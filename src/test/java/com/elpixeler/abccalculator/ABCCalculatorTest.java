@@ -60,6 +60,6 @@ public class ABCCalculatorTest {
     public void testConditionsCounter() {
         ABCCalculator abcc = new ABCCalculator("folder");
         int result = abcc.conditionsCount(testBlock);
-        assertEquals(5, result);
+        assertEquals(3, result);
     }
 }
