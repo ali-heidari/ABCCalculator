@@ -77,8 +77,12 @@ public class ABCCalculator {
   private Map<String, String> extractFuncBlocks(String source) {
     // Create a regex pattern to extract methods bodies
     // This regex has 3 capturing group; method keywords, method name and the block
+    // NOTE: In java there is no support for recursive REGEX at this time, therefore i defined a simple rule for end of methods which need to be followed.
+    // void foo()  {  if(SOME_CONDITION){ } }//ENDOFMETHOD
+    // As you see each method should end with }//ENDOFMETHOD
+    // Now we can extract body of method with REGEX 
     Pattern pattern = Pattern.compile(
-        "((?:(?:public|private|protected|static|final|native|synchronized|abstract|transient+\\s+)+[$_\\w<>\\[\\]\\s]*\\s+))([\\$_\\w]+\\([^\\)]*\\)?\\s*)(\\{?[^\\}]*\\}?)");
+        "((?:(?:public|private|protected|static|final|native|synchronized|abstract|transient+\\s+)+[$_\\w<>\\[\\]\\s]*\\s+))([\\$_\\w]+\\([^\\)]*\\)?\\s*)(\\{?[\\s\\S]*?\\}?\\/\\/ENDOFMETHOD)");
     Matcher matcher = pattern.matcher(source);
     Map<String, String> blocks = new HashMap<>();
     while (matcher.find()) {

@@ -46,12 +46,12 @@ public class CircleBarVisualizerSmooth extends BaseVisualizer {
 
     public CircleBarVisualizerSmooth(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-    }
+    }//ENDOFMETHOD
 
     @Override
     protected void init() {
         paint.setStyle(Paint.Style.STROKE);
-    }
+    }//ENDOFMETHOD
 
     /*
      * Returns the value of given configuration-key with handling
@@ -64,7 +64,7 @@ public class CircleBarVisualizerSmooth extends BaseVisualizer {
             return (int) obj;
         else
             return 0;
-    }
+    }//ENDOFMETHOD
 
     /*
      * set new value of given configuration-key
@@ -81,7 +81,7 @@ public class CircleBarVisualizerSmooth extends BaseVisualizer {
             return getHeight();
         else
             return getWidth();
-    }
+    }//ENDOFMETHOD
 
     /*
      * Fill the initial configurations
@@ -100,7 +100,7 @@ public class CircleBarVisualizerSmooth extends BaseVisualizer {
         configs.put("needsInit", 1);// 0 = false, 1 = true
         configs.put("radius", radius);
         configs.put("stepCounter", 0);
-    }
+    }//ENDOFMETHOD
 
     /*
      * Initializes the points
@@ -118,7 +118,7 @@ public class CircleBarVisualizerSmooth extends BaseVisualizer {
             // It needs to multiply by 2 because there are X and Y differences
             diffs = new float[bytes.length * 2];
         }
-    }
+    }//ENDOFMETHOD
 
     /*
      * Fill the points for end of each bar. Only needs to calculate the end of
@@ -134,7 +134,7 @@ public class CircleBarVisualizerSmooth extends BaseVisualizer {
             // Find endX to be drawn
             points[indexM4 + 3] = endPoints[indexM4 + 3] + diffs[indexM2 + 1] * round;
         }
-    }
+    }//ENDOFMETHOD
 
     /*
      * Fills the end points and differences
@@ -159,7 +159,7 @@ public class CircleBarVisualizerSmooth extends BaseVisualizer {
             endPoints[i * 4 + 2] = endPoints[i * 4];
             endPoints[i * 4 + 3] = endPoints[i * 4 + 1];
         }
-    }
+    }//ENDOFMETHOD
 
     /*
      * Calculates the points of each round. Round represents amount of
@@ -182,7 +182,7 @@ public class CircleBarVisualizerSmooth extends BaseVisualizer {
         }
         // Fill points
         this.fillPoints(round, i);
-    }
+    }//ENDOFMETHOD
 
     /*
      * Calculates the legth of bar
@@ -194,7 +194,7 @@ public class CircleBarVisualizerSmooth extends BaseVisualizer {
         byte a = (byte) (-Math.abs(bytes[x]) + 128);
         // Gets the length of the line
         return a * (getHeight() / 4) / 128;
-    }
+    }//ENDOFMETHOD
 
     /*
      * Calculate first points
@@ -208,7 +208,7 @@ public class CircleBarVisualizerSmooth extends BaseVisualizer {
             // Find startY
             points[indexM4 + 1] = (float) (this.getHeight() / 2 + getConfig("radius") * Math.sin(angle));
         }
-    }
+    }//ENDOFMETHOD
 
     /*
      * Draw waveform It calculates the StartX,StartY just once because it never
@@ -252,7 +252,7 @@ public class CircleBarVisualizerSmooth extends BaseVisualizer {
 
         // Resets configurations variable for next calling of onDraw
         this.resetConfigs();
-    }
+    }//ENDOFMETHOD
 
     /*
      * Reset configs
@@ -263,5 +263,5 @@ public class CircleBarVisualizerSmooth extends BaseVisualizer {
         // Initialized, no longer need initializing
         if (getConfig("needsInit") == 1)
             setConfig("needsInit", 0);
-    }
+    }//ENDOFMETHOD
 }
