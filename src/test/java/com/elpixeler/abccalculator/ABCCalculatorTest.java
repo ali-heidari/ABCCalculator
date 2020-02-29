@@ -22,6 +22,20 @@ public class ABCCalculatorTest {
             + " if (getConfig(\"needsInit\") == 0)" + "     canvas.drawLines(points, paint);" + "super.onDraw(canvas);"
             + "// Resets configurations variable for next calling of onDraw" + "this.resetConfigs();";
 
+    String testBlock2 = "public void run() throws NullPointerException {" + " // Declare variables, will be needed"
+            + "  int a, b, c;" + "  double abc;" + "  // Get list of available files"
+            + " for (File fileEntry : new File(this.folderPath).listFiles()) {"
+            + "     // Check if it is a directory, just bypass it" + "   if (fileEntry.isDirectory())" + "    continue;"
+            + "   // Read source text" + "  String source;" + "   try {" + "       source = readContent(fileEntry);"
+            + "    } catch (IOException e) {" + "    continue;" + "      }" + "  // Distinguish functions block"
+            + "   Map<String, String> funcBlocks = extractFuncBlocks(source);"
+            + "    // Now let's calculate the ABC for each method"
+            + "   for (Map.Entry<String, String> entry : funcBlocks.entrySet()) {"
+            + " a = assignmentsCount(entry.getValue());" + "  b = branchesCount(entry.getValue());"
+            + "     c = conditionsCount(entry.getValue());" + "    abc = Math.sqrt(a * a + b * b + c * c);"
+            + "     System.out.println(\"ABC score for \" + entry.getKey() + \":\t[A=\" + a + \",B=\" + b + \",C=\" + c + \"]\t\" + abc);\""
+            + " }" + "   }" + "  }";
+
     /**
      * Test the run method
      */
@@ -45,6 +59,16 @@ public class ABCCalculatorTest {
         assertEquals(5, result);
     }
     /**
+     * Test the assignments counter 2
+     */
+    @Test
+    public void testAssignmentsCounter2() {
+        ABCCalculator abcc = new ABCCalculator("folder");
+        int result = abcc.assignmentsCount(testBlock2);
+        assertEquals(6, result);
+    }
+
+    /**
      * Test the branches counter
      */
     @Test
@@ -54,12 +78,31 @@ public class ABCCalculatorTest {
         assertEquals(9, result);
     }
     /**
+     * Test the branches counter 2
+     */
+    @Test
+    public void testBranchesCounter2() {
+        ABCCalculator abcc = new ABCCalculator("folder");
+        int result = abcc.branchesCount(testBlock2);
+        assertEquals(15, result);
+    }
+
+    /**
      * Test the conditions counter
      */
     @Test
     public void testConditionsCounter() {
         ABCCalculator abcc = new ABCCalculator("folder");
         int result = abcc.conditionsCount(testBlock);
+        assertEquals(3, result);
+    }
+    /**
+     * Test the conditions counter 2
+     */
+    @Test
+    public void testConditionsCounter2() {
+        ABCCalculator abcc = new ABCCalculator("folder");
+        int result = abcc.conditionsCount(testBlock2);
         assertEquals(3, result);
     }
 }
