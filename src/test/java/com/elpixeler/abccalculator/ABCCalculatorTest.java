@@ -22,9 +22,8 @@ public class ABCCalculatorTest {
             + " if (getConfig(\"needsInit\") == 0)" + "     canvas.drawLines(points, paint);" + "super.onDraw(canvas);"
             + "// Resets configurations variable for next calling of onDraw" + "this.resetConfigs();";
 
-    String testBlock2 = "public void run() throws NullPointerException {" + " // Declare variables, will be needed"
-            + "  int a, b, c;" + "  double abc;" + "  // Get list of available files"
-            + " for (File fileEntry : new File(this.folderPath).listFiles()) {"
+    String testBlock2 = " // Declare variables, will be needed" + "  int a, b, c;" + "  double abc;"
+            + "  // Get list of available files" + " for (File fileEntry : new File(this.folderPath).listFiles()) {"
             + "     // Check if it is a directory, just bypass it" + "   if (fileEntry.isDirectory())" + "    continue;"
             + "   // Read source text" + "  String source;" + "   try {" + "       source = readContent(fileEntry);"
             + "    } catch (IOException e) {" + "    continue;" + "      }" + "  // Distinguish functions block"
@@ -34,7 +33,7 @@ public class ABCCalculatorTest {
             + " a = assignmentsCount(entry.getValue());" + "  b = branchesCount(entry.getValue());"
             + "     c = conditionsCount(entry.getValue());" + "    abc = Math.sqrt(a * a + b * b + c * c);"
             + "     System.out.println(\"ABC score for \" + entry.getKey() + \":\t[A=\" + a + \",B=\" + b + \",C=\" + c + \"]\t\" + abc);\""
-            + " }" + "   }" + "  }";
+            + " }" + "   }";
 
     /**
      * Test the run method
@@ -58,6 +57,7 @@ public class ABCCalculatorTest {
         int result = abcc.assignmentsCount(testBlock);
         assertEquals(5, result);
     }
+
     /**
      * Test the assignments counter 2
      */
@@ -77,6 +77,7 @@ public class ABCCalculatorTest {
         int result = abcc.branchesCount(testBlock);
         assertEquals(9, result);
     }
+
     /**
      * Test the branches counter 2
      */
@@ -96,6 +97,7 @@ public class ABCCalculatorTest {
         int result = abcc.conditionsCount(testBlock);
         assertEquals(3, result);
     }
+
     /**
      * Test the conditions counter 2
      */
