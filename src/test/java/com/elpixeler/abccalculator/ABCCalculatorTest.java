@@ -31,7 +31,7 @@ public class ABCCalculatorTest {
         try {
             abcc.run();
             fail("NO NullPointerException raised.");
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
         }
     }
 

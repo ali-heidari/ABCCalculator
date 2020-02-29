@@ -40,7 +40,7 @@ public class ABCCalculator {
   /*
    * Runs the calculator
    */
-  public void run() throws NullPointerException {
+  public void run() throws NullPointerException, IOException {
     // Declare variables, will be needed
     int a, b, c;
     double abc;
@@ -49,13 +49,9 @@ public class ABCCalculator {
       // Check if it is a directory, just bypass it
       if (fileEntry.isDirectory())
         continue;
+
       // Read source text
-      String source;
-      try {
-        source = readContent(fileEntry);
-      } catch (IOException e) {
-        continue;
-      }
+      String source = readContent(fileEntry);
       // Distinguish functions block
       Map<String, String> funcBlocks = extractFuncBlocks(source);
       // Now let's calculate the ABC for each method
@@ -64,7 +60,7 @@ public class ABCCalculator {
         b = branchesCount(entry.getValue());
         c = conditionsCount(entry.getValue());
         abc = Math.sqrt(a * a + b * b + c * c);
-        System.out.println("ABC score for " + entry.getKey() + ":\t[A=" + a + ",B=" + b + ",C=" + c + "]\t" + abc);
+        System.out.println(fileEntry.getName()+"= ABC score for " + entry.getKey() + ":\t[A=" + a + ",B=" + b + ",C=" + c + "]\t" + abc);
       }
     }
   }
@@ -77,10 +73,11 @@ public class ABCCalculator {
   private Map<String, String> extractFuncBlocks(String source) {
     // Create a regex pattern to extract methods bodies
     // This regex has 3 capturing group; method keywords, method name and the block
-    // NOTE: In java there is no support for recursive REGEX at this time, therefore i defined a simple rule for end of methods which need to be followed.
-    // void foo()  {  if(SOME_CONDITION){ } }//ENDOFMETHOD
+    // NOTE: In java there is no support for recursive REGEX at this time, therefore
+    // i defined a simple rule for end of methods which need to be followed.
+    // void foo() { if(SOME_CONDITION){ } }//ENDOFMETHOD
     // As you see each method should end with }//ENDOFMETHOD
-    // Now we can extract body of method with REGEX 
+    // Now we can extract body of method with REGEX
     Pattern pattern = Pattern.compile(
         "((?:(?:public|private|protected|static|final|native|synchronized|abstract|transient+\\s+)+[$_\\w<>\\[\\]\\s]*\\s+))([\\$_\\w]+\\([^\\)]*\\)?\\s*)(\\{?[\\s\\S]*?\\}?\\/\\/ENDOFMETHOD)");
     Matcher matcher = pattern.matcher(source);
@@ -130,7 +127,7 @@ public class ABCCalculator {
   public int conditionsCount(String text) {
     int count = 0;
     // Regex against every combination of =, ++ and --
-    Matcher matcher = Pattern.compile("(==|<|>|!|\\?)\\B|(else\\sif|else|case|default|try|catch)\\b").matcher(text);
+    Matcher matcher = Pattern.compile("((?:if\\s*\\()+.*(==|<|>|!|\\?))|((if\\s*\\()|(else\\s*if)|else|case|default|(try\\s*\\{)|catch)").matcher(text);
     while (matcher.find())
       count++;
     return count;

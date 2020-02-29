@@ -208,6 +208,8 @@ public class CircleBarVisualizerSmooth extends BaseVisualizer {
             // Find startY
             points[indexM4 + 1] = (float) (this.getHeight() / 2 + getConfig("radius") * Math.sin(angle));
         }
+        // Calculates points for current round
+        calcRound(i, radianAngle);
     }//ENDOFMETHOD
 
     /*
@@ -241,8 +243,6 @@ public class CircleBarVisualizerSmooth extends BaseVisualizer {
 
             this.fillStartingPoints(i, radianAngle);
 
-            // Calculates points for current round
-            calcRound(i, radianAngle);
 
         }
         if (getConfig("needsInit") == 0)
