@@ -10,5 +10,5 @@ The project started for java sources, Although it works on languages with java-l
 
 ## How to use
 
-1. Put your files inside the source folder.
-2. Methods should end with *}//ENDOFMETHOD*. Because of some limitation in REGEX engine of java.
+1. Put your files inside the source folder. NOTE: source extension is not important but should be valid java source code.
+2. Methods should end with **}//ENDOFMETHOD**. Because of some limitation in REGEX engine of java.
