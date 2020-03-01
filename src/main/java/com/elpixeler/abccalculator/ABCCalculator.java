@@ -60,7 +60,8 @@ public class ABCCalculator {
         b = branchesCount(entry.getValue());
         c = conditionsCount(entry.getValue());
         abc = Math.sqrt(a * a + b * b + c * c);
-        System.out.println(fileEntry.getName()+"= ABC score for " + entry.getKey() + ":\t[A=" + a + ",B=" + b + ",C=" + c + "]\t" + abc);
+        System.out.println(fileEntry.getName() + "= ABC score for " + entry.getKey() + ":\t[A=" + a + ",B=" + b + ",C="
+            + c + "]\t" + abc);
       }
     }
   }
@@ -83,9 +84,25 @@ public class ABCCalculator {
     Matcher matcher = pattern.matcher(source);
     Map<String, String> blocks = new HashMap<>();
     while (matcher.find()) {
-      blocks.put(matcher.group(2), matcher.group(3));
+      blocks.put(matcher.group(2), extractValidLines(matcher.group(3)));
     }
     return blocks;
+  }
+
+  /**
+   * Finds the valid code lines and returns no comments
+   * 
+   * @param block The raw body of method
+   * @return Only code lines
+   */
+  public String extractValidLines(String block) {
+    Pattern pattern = Pattern.compile("(\\w+.+(;|\\)|\\{)$)", Pattern.MULTILINE | Pattern.DOTALL);
+    Matcher matcher = pattern.matcher(block);
+    String codeLines="";
+    while (matcher.find()) {
+      codeLines+= matcher.group()+ "\n";
+    }
+    return codeLines;
   }
 
   /**
@@ -127,7 +144,9 @@ public class ABCCalculator {
   public int conditionsCount(String text) {
     int count = 0;
     // Regex against every combination of =, ++ and --
-    Matcher matcher = Pattern.compile("((?:((if\\s*\\(+)|;)[^(\\\\n)]*)(==|<|>|!|\\?))|((if\\s*\\()|(else\\s*if)|else|case|default|(try\\s*\\{)|catch)").matcher(text);
+    Matcher matcher = Pattern.compile(
+        "((?:((if\\s*\\(+)|;)[^(\\\\n)]*)(==|<|>|!|\\?))|((if\\s*\\()|(else\\s*if)|else|case|default|(try\\s*\\{)|catch)")
+        .matcher(text);
     while (matcher.find())
       count++;
     return count;
