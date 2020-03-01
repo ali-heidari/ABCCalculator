@@ -1,10 +1,8 @@
 package com.elpixeler.abccalculator;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.io.IOException;
 
 import org.junit.Test;
 
