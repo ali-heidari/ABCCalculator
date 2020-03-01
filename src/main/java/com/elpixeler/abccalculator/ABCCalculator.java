@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.security.KeyStore.Entry;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -41,9 +42,6 @@ public class ABCCalculator {
    * Runs the calculator
    */
   public void run() throws NullPointerException, IOException {
-    // Declare variables, will be needed
-    int a, b, c;
-    double abc;
     // Get list of available files
     for (File fileEntry : new File(this.folderPath).listFiles()) {
       // Check if it is a directory, just bypass it
@@ -56,14 +54,26 @@ public class ABCCalculator {
       Map<String, String> funcBlocks = extractFuncBlocks(source);
       // Now let's calculate the ABC for each method
       for (Map.Entry<String, String> entry : funcBlocks.entrySet()) {
-        a = assignmentsCount(entry.getValue());
-        b = branchesCount(entry.getValue());
-        c = conditionsCount(entry.getValue());
-        abc = Math.sqrt(a * a + b * b + c * c);
-        System.out.println(fileEntry.getName() + "= ABC score for " + entry.getKey() + ":\t[A=" + a + ",B=" + b + ",C="
-            + c + "]\t" + abc);
+        calculateABC(entry, fileEntry.getName());
       }
     }
+  }
+
+  /**
+   * Calculate ABC for given method block and file
+   * @param entry The method block. Key is method name and value is the body 
+   * @param fileName File under analyze
+   */
+  private void calculateABC(Map.Entry<String, String> entry, String fileName) {
+    // Declare variables, will be needed
+    int a, b, c;
+    double abc;
+    a = assignmentsCount(entry.getValue());
+    b = branchesCount(entry.getValue());
+    c = conditionsCount(entry.getValue());
+    abc = Math.sqrt(a * a + b * b + c * c);
+    System.out
+        .println(fileName + "= ABC score for " + entry.getKey() + ":\t[A=" + a + ",B=" + b + ",C=" + c + "]\t" + abc);
   }
 
   /*
@@ -98,9 +108,9 @@ public class ABCCalculator {
   public String extractValidLines(String block) {
     Pattern pattern = Pattern.compile("(\\w+.+(;|\\)|\\{)$)", Pattern.MULTILINE | Pattern.DOTALL);
     Matcher matcher = pattern.matcher(block);
-    String codeLines="";
+    String codeLines = "";
     while (matcher.find()) {
-      codeLines+= matcher.group()+ "\n";
+      codeLines += matcher.group() + "\n";
     }
     return codeLines;
   }
