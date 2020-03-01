@@ -105,6 +105,6 @@ public class ABCCalculatorTest {
     public void testConditionsCounter2() {
         ABCCalculator abcc = new ABCCalculator("folder");
         int result = abcc.conditionsCount(testBlock2);
-        assertEquals(3, result);
+        assertEquals(5, result);
     }
 }

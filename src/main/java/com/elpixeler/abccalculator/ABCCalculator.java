@@ -145,7 +145,7 @@ public class ABCCalculator {
     int count = 0;
     // Regex against every combination of =, ++ and --
     Matcher matcher = Pattern.compile(
-        "((?:((if\\s*\\(+)|;)[^(\\\\n)]*)(==|<|>|!|\\?))|((if\\s*\\()|(else\\s*if)|else|case|default|(try\\s*\\{)|catch)")
+        "((?:((if\\s*\\(+)|;)[^(\\\\n)]*)(==|<|>|!|\\?))|((if\\s*\\()|(else\\s*if)|else|continue|case|default|(try\\s*\\{)|catch)")
         .matcher(text);
     while (matcher.find())
       count++;
