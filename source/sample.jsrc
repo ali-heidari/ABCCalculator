@@ -1,0 +1,39 @@
+
+  /*
+   * Runs the calculator
+   */
+  public void run() throws NullPointerException, IOException {
+    // Get list of available files
+    for (File fileEntry : new File(this.folderPath).listFiles()) {
+      // Check if it is a directory, just bypass it
+      if (fileEntry.isDirectory())
+        continue;
+
+      // Read source text
+      String source = readContent(fileEntry);
+      // Distinguish functions block
+      Map<String, String> funcBlocks = extractFuncBlocks(source);
+      // Now let's calculate the ABC for each method
+      for (Map.Entry<String, String> entry : funcBlocks.entrySet()) {
+        calculateABC(entry, fileEntry.getName());
+      }
+    }
+  }//ENDOFMETHOD
+
+  /**
+   * Calculate ABC for given method block and file
+   * @param entry The method block. Key is method name and value is the body 
+   * @param fileName File under analyze
+   */
+  private void calculateABC(Map.Entry<String, String> entry, String fileName) {
+    // Declare variables, will be needed
+    int a, b, c;
+    double abc;
+    a = assignmentsCount(entry.getValue());
+    b = branchesCount(entry.getValue());
+    c = conditionsCount(entry.getValue());
+    abc = Math.sqrt(a * a + b * b + c * c);
+    System.out
+        .println(fileName + "= ABC score for " + entry.getKey() + ":\t[A=" + a + ",B=" + b + ",C=" + c + "]\t" + abc);
+  }//ENDOFMETHOD
+  
